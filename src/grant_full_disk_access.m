@@ -94,8 +94,8 @@ static bool patchfind_sections(void* executable_map,
 }
 
 static uint64_t patchfind_get_padding(struct segment_command_64* segment) {
-  struct section_64** section_array = (void*)segment + sizeof(struct segment_command_64);
-  struct section_64* last_section = section_array[segment->nsects - 1];
+  struct section_64* section_array = (void*)segment + sizeof(struct segment_command_64);
+  struct section_64* last_section = &section_array[segment->nsects - 1];
   return last_section->offset + last_section->size;
 }
 
@@ -145,9 +145,9 @@ static uint64_t patchfind_got(void* executable_map, size_t executable_length,
     break;
   }
 
-  struct section_64** section_array =
+  struct section_64* section_array =
       (void*)data_const_segment + sizeof(struct segment_command_64);
-  struct section_64* first_section = section_array[0];
+  struct section_64* first_section = &section_array[0];
   if (!(strcmp(first_section->sectname, "__auth_got") == 0 ||
         strcmp(first_section->sectname, "__got") == 0)) {
     return 0;
