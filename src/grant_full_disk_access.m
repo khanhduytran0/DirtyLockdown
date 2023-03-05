@@ -397,7 +397,7 @@ static void grant_full_disk_access_impl(void (^completion)(NSString* extension_t
 }
 
 void grant_full_disk_access(void (^completion)(NSError* _Nullable)) {
-#if 00000 // test when entitlement granted
+#if 1 // set to 0 if has no-sandbox entitlement
 #if 0
   if (!NSClassFromString(@"NSPresentationIntent")) {
     // class introduced in iOS 15.0.
